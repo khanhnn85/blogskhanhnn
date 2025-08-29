@@ -3,7 +3,7 @@ import type { Category } from '@/types';
 import { Cog, Shield, Network, Cloud } from 'lucide-react';
 import type { Article } from '@/types';
 import { db } from './firebase';
-import { collection, getDocs, query, where, orderBy, limit, doc, getDoc, addDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, limit, doc, getDoc, addDoc, setDoc } from 'firebase/firestore';
 
 
 export const CATEGORIES: Category[] = [
@@ -14,6 +14,7 @@ export const CATEGORIES: Category[] = [
 ];
 
 const articlesCollection = collection(db, 'articles');
+const usersCollection = collection(db, 'users');
 
 // Helper function to convert Firestore doc to Article object
 const fromFirestore = (doc: any): Article => {
@@ -122,4 +123,25 @@ export async function createArticle(article: Omit<Article, 'id'>): Promise<strin
     throw error;
   }
 }
-    
+
+type UserData = {
+    uid: string;
+    email: string;
+    displayName: string;
+    photoURL: string;
+};
+
+export async function createUser(userData: UserData): Promise<void> {
+    try {
+        const userRef = doc(db, 'users', userData.uid);
+        await setDoc(userRef, {
+            displayName: userData.displayName,
+            email: userData.email,
+            photoURL: userData.photoURL,
+            lastLogin: new Date().toISOString(),
+        }, { merge: true }); // Use merge to avoid overwriting existing data
+    } catch (error) {
+        console.error("Error creating or updating user: ", error);
+        throw error;
+    }
+}

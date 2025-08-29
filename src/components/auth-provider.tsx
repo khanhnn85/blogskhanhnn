@@ -6,6 +6,7 @@ import { onAuthStateChanged, signInWithPopup, signOut as firebaseSignOut, type U
 import { auth, provider } from '@/lib/firebase';
 import { AuthContext } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
+import { createUser } from '@/lib/data';
 
 const ADMIN_EMAIL = 'khanhnnvn@gmail.com';
 
@@ -28,10 +29,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signIn = async () => {
     setLoading(true);
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const loggedInUser = result.user;
+      
+      // Save user to Firestore
+      await createUser({
+        uid: loggedInUser.uid,
+        email: loggedInUser.email || '',
+        displayName: loggedInUser.displayName || '',
+        photoURL: loggedInUser.photoURL || '',
+      });
+
       toast({
         title: "Đăng nhập thành công",
-        description: `Chào mừng trở lại!`,
+        description: `Chào mừng trở lại, ${loggedInUser.displayName}!`,
       });
     } catch (error) {
       const authError = error as AuthError;
