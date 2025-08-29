@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, ReactNode } from 'react';
-import { onAuthStateChanged, signInWithPopup, signOut as firebaseSignOut, type User } from 'firebase/auth';
+import { onAuthStateChanged, signInWithPopup, signOut as firebaseSignOut, type User, type AuthError } from 'firebase/auth';
 import { auth, provider } from '@/lib/firebase';
 import { AuthContext } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
@@ -34,6 +34,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: `Chào mừng trở lại!`,
       });
     } catch (error) {
+      const authError = error as AuthError;
+      // Don't show an error toast if the user closes the sign-in popup.
+      if (authError.code === 'auth/popup-closed-by-user') {
+        console.log('Sign-in popup closed by user.');
+        return;
+      }
       console.error("Lỗi đăng nhập:", error);
       toast({
         variant: "destructive",
