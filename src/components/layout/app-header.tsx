@@ -6,12 +6,12 @@ import SearchBar from '@/components/search-bar';
 import CategoryNav from './category-nav';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogIn, LogOut } from 'lucide-react';
+import { LogIn, LogOut, PlusCircle } from 'lucide-react';
 
 function UserNav() {
-  const { user, signIn, signOut } = useAuth();
+  const { user, isAdmin, signIn, signOut } = useAuth();
 
   if (!user) {
     return (
@@ -41,6 +41,18 @@ function UserNav() {
             </p>
           </div>
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {isAdmin && (
+            <DropdownMenuGroup>
+                <DropdownMenuLabel>Quản trị</DropdownMenuLabel>
+                 <Link href="/admin/create-post">
+                    <DropdownMenuItem>
+                            <PlusCircle className="mr-2 h-4 w-4" />
+                            <span>Bài viết mới</span>
+                    </DropdownMenuItem>
+                 </Link>
+            </DropdownMenuGroup>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut}>
           <LogOut className="mr-2 h-4 w-4" />
