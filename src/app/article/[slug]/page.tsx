@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { ARTICLES } from '@/lib/data';
+import { getArticleBySlug, getArticles, getAllArticleSlugs } from '@/lib/data';
 import { Badge } from '@/components/ui/badge';
 import ArticleActions from './article-actions';
 import Link from 'next/link';
@@ -8,13 +8,14 @@ import { CATEGORIES } from '@/lib/data';
 import ArticleList from '@/components/article-list';
 
 export async function generateStaticParams() {
-  return ARTICLES.map((article) => ({
-    slug: article.slug,
+  const slugs = await getAllArticleSlugs();
+  return slugs.map((slug) => ({
+    slug: slug,
   }));
 }
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
-  const article = ARTICLES.find((a) => a.slug === params.slug);
+export default async function ArticlePage({ params }: { params: { slug: string } }) {
+  const article = await getArticleBySlug(params.slug);
 
   if (!article) {
     notFound();
@@ -22,7 +23,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
   const category = CATEGORIES.find((c) => c.slug === article.category);
   
-  const relatedArticles = ARTICLES.filter(a => a.category === article.category && a.slug !== article.slug).slice(0, 3);
+  const relatedArticles = await getArticles(article.category, 3, article.slug);
 
   return (
     <>

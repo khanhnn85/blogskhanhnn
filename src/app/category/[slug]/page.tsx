@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { ARTICLES, CATEGORIES } from '@/lib/data';
+import { getArticles, CATEGORIES } from '@/lib/data';
 import ArticleList from '@/components/article-list';
 
 export async function generateStaticParams() {
@@ -8,13 +8,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
+export default async function CategoryPage({ params }: { params: { slug: string } }) {
   const category = CATEGORIES.find((c) => c.slug === params.slug);
   if (!category) {
     notFound();
   }
 
-  const articles = ARTICLES.filter((article) => article.category === params.slug);
+  const articles = await getArticles(params.slug);
 
   return (
     <div className="space-y-8">

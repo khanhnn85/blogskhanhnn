@@ -1,4 +1,4 @@
-import { ARTICLES } from '@/lib/data';
+import { getArticles } from '@/lib/data';
 import ArticleList from '@/components/article-list';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -6,9 +6,10 @@ import { Badge } from '@/components/ui/badge';
 import { CATEGORIES } from '@/lib/data';
 import { ArrowRight } from 'lucide-react';
 
-export default function Home() {
-  const featuredArticle = ARTICLES[0];
-  const otherArticles = ARTICLES.slice(1, 4);
+export default async function Home() {
+  const allArticles = await getArticles();
+  const featuredArticle = allArticles[0];
+  const otherArticles = allArticles.slice(1, 4);
   const featuredCategory = CATEGORIES.find(c => c.slug === featuredArticle.category);
 
   return (

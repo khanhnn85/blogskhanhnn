@@ -1,29 +1,31 @@
 'use client';
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { ARTICLES } from '@/lib/data';
+import { searchArticles } from '@/lib/data';
 import ArticleList from '@/components/article-list';
 import { useEffect, useState } from 'react';
+import type { Article } from '@/types';
 
 function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
-  const [filteredArticles, setFilteredArticles] = useState(ARTICLES);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (query) {
-      const filtered = ARTICLES.filter(
-        (article) =>
-          article.title.toLowerCase().includes(query.toLowerCase()) ||
-          article.content.toLowerCase().includes(query.toLowerCase()) ||
-          article.excerpt.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredArticles(filtered);
-    } else {
-      setFilteredArticles(ARTICLES);
+    async function performSearch() {
+      setIsLoading(true);
+      const articles = await searchArticles(query);
+      setFilteredArticles(articles);
+      setIsLoading(false);
     }
+    performSearch();
   }, [query]);
 
+
+  if (isLoading) {
+    return <div>Đang tải kết quả...</div>;
+  }
 
   return (
     <div className="space-y-8">
