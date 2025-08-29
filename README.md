@@ -98,17 +98,48 @@ service cloud.firestore {
 
 ### 6. Chạy ứng dụng
 
-Chạy máy chủ phát triển:
+#### Chế độ phát triển
+Chạy máy chủ phát triển trên cổng 3001:
 
 ```bash
 npm run dev
 ```
 
-Mở [http://localhost:9002](http://localhost:9002) trên trình duyệt của bạn để xem kết quả.
+Mở [http://localhost:3001](http://localhost:3001) trên trình duyệt của bạn để xem kết quả.
+
+#### Chế độ Production với PM2
+
+Để triển khai ứng dụng trong môi trường production trên máy chủ Ubuntu, bạn nên sử dụng `pm2` để quản lý tiến trình.
+
+1.  **Cài đặt pm2 trên toàn cục:**
+    ```bash
+    npm install pm2 -g
+    ```
+2.  **Sử dụng script để build và khởi động:**
+    Tệp `start-prod.sh` đã được tạo sẵn để tự động hóa quá trình này. Đầu tiên, cấp quyền thực thi cho tệp:
+    ```bash
+    chmod +x start-prod.sh
+    ```
+    Sau đó, chạy script:
+    ```bash
+    ./start-prod.sh
+    ```
+    Script này sẽ:
+    - Build ứng dụng Next.js.
+    - Dừng tiến trình pm2 có tên `khanhnn-insights` nếu nó đang chạy.
+    - Khởi động ứng dụng của bạn trên cổng 3001 bằng pm2.
+
+3.  **Các lệnh pm2 hữu ích:**
+    - Xem danh sách các tiến trình đang chạy: `pm2 list`
+    - Xem log của ứng dụng: `pm2 logs khanhnn-insights`
+    - Dừng ứng dụng: `pm2 stop khanhnn-insights`
+    - Khởi động lại ứng dụng: `pm2 restart khanhnn-insights`
+
 
 ## Các câu lệnh có sẵn
 
-- `npm run dev`: Chạy ứng dụng ở chế độ phát triển.
+- `npm run dev`: Chạy ứng dụng ở chế độ phát triển trên cổng 3001.
 - `npm run build`: Build ứng dụng để triển khai production.
-- `npm run start`: Chạy phiên bản đã build.
+- `npm run start`: Chạy phiên bản đã build (không qua pm2).
 - `npm run lint`: Chạy ESLint để kiểm tra lỗi mã nguồn.
+- `npm run prod:start`: Chạy phiên bản đã build trên cổng 3001.
