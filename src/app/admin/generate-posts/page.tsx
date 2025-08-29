@@ -24,6 +24,7 @@ export default function GeneratePostsPage() {
   const { toast } = useToast();
 
   const [topic, setTopic] = useState('Hệ điều hành Linux');
+  const [count, setCount] = useState(2);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
   const [generatedArticles, setGeneratedArticles] = useState<GeneratedArticle[]>([]);
@@ -45,11 +46,19 @@ export default function GeneratePostsPage() {
       });
       return;
     }
+    if (count <= 0 || count > 5) {
+      toast({
+        variant: "destructive",
+        title: "Số lượng không hợp lệ",
+        description: "Vui lòng nhập số lượng từ 1 đến 5.",
+      });
+      return;
+    }
     setIsGenerating(true);
     setGeneratedArticles([]);
     setSelectedArticles({});
     try {
-      const result = await generateArticles({ topic, count: 2 });
+      const result = await generateArticles({ topic, count });
       setGeneratedArticles(result.articles);
       // Pre-select all generated articles
       const initialSelection: Record<string, boolean> = {};
@@ -134,7 +143,7 @@ export default function GeneratePostsPage() {
             Soạn bài hàng loạt với AI
           </CardTitle>
           <CardDescription>
-            Nhập một chủ đề, AI sẽ tự động soạn thảo nhiều bài viết. Sau đó bạn có thể xem lại, chọn và đăng chúng.
+            Nhập một chủ đề và số lượng, AI sẽ tự động soạn thảo nhiều bài viết. Sau đó bạn có thể xem lại, chọn và đăng chúng.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -149,6 +158,19 @@ export default function GeneratePostsPage() {
                 required
                 disabled={isGenerating}
               />
+            </div>
+            <div className='space-y-2 w-24'>
+                <Label htmlFor="count">Số lượng</Label>
+                <Input
+                    id="count"
+                    type="number"
+                    value={count}
+                    onChange={(e) => setCount(Number(e.target.value))}
+                    min="1"
+                    max="5"
+                    required
+                    disabled={isGenerating}
+                />
             </div>
             <Button type="submit" disabled={isGenerating || !topic}>
               {isGenerating ? (
