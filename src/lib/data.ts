@@ -152,4 +152,230 @@ export const ARTICLES: Article[] = [
       <p>Việc chuyển sang microservices không phải là một quyết định nên được xem nhẹ. Nó đòi hỏi sự trưởng thành về mặt tổ chức và kỹ thuật, đặc biệt là trong các lĩnh vực DevOps, giám sát và tự động hóa.</p>
     `,
   },
+  {
+    id: '6',
+    slug: 'nhap-mon-cau-lenh-linux',
+    title: 'Nhập môn về các câu lệnh cơ bản trong Linux',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-21',
+    image: 'https://picsum.photos/1200/630?random=6',
+    image_alt: 'Linux terminal with code',
+    excerpt: 'Bắt đầu hành trình của bạn với Linux bằng cách tìm hiểu các câu lệnh thiết yếu để điều hướng và quản lý hệ thống tệp của bạn.',
+    content: `
+      <p>Dòng lệnh Linux là một công cụ mạnh mẽ. Việc thành thạo một vài lệnh cơ bản có thể cải thiện đáng kể năng suất của bạn. Dưới đây là một số lệnh để bạn bắt đầu.</p>
+      <h2>Điều hướng hệ thống tệp</h2>
+      <ul>
+        <li><code>pwd</code>: In thư mục làm việc hiện tại.</li>
+        <li><code>ls</code>: Liệt kê nội dung của một thư mục.</li>
+        <li><code>cd</code>: Thay đổi thư mục hiện tại.</li>
+      </ul>
+      <h2>Quản lý tệp</h2>
+      <ul>
+        <li><code>touch &lt;tên_tệp&gt;</code>: Tạo một tệp trống mới.</li>
+        <li><code>cp &lt;nguồn&gt; &lt;đích&gt;</code>: Sao chép tệp hoặc thư mục.</li>
+        <li><code>mv &lt;nguồn&gt; &lt;đích&gt;</code>: Di chuyển hoặc đổi tên tệp hoặc thư mục.</li>
+        <li><code>rm &lt;tên_tệp&gt;</code>: Xóa một tệp.</li>
+      </ul>
+    `
+  },
+  {
+    id: '7',
+    slug: 'quan-ly-tien-trinh-trong-linux',
+    title: 'Quản lý tiến trình trong Linux',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-22',
+    image: 'https://picsum.photos/1200/630?random=7',
+    image_alt: 'Process management visualization',
+    excerpt: 'Tìm hiểu cách xem, quản lý và kết thúc các tiến trình đang chạy trên hệ thống Linux của bạn bằng các công cụ dòng lệnh.',
+    content: `
+      <p>Quản lý tiến trình là một kỹ năng quản trị hệ thống Linux cơ bản. Hiểu cách các tiến trình hoạt động sẽ giúp bạn gỡ lỗi và tối ưu hóa hệ thống của mình.</p>
+      <h2>Các lệnh hữu ích</h2>
+      <ul>
+        <li><code>ps aux</code>: Hiển thị ảnh chụp nhanh của tất cả các tiến trình đang chạy.</li>
+        <li><code>top</code>: Cung cấp chế độ xem thời gian thực về các tiến trình hệ thống.</li>
+        <li><code>kill &lt;PID&gt;</code>: Gửi tín hiệu đến một tiến trình, thường được sử dụng để kết thúc nó.</li>
+        <li><code>pkill &lt;tên_tiến_trình&gt;</code>: Kết thúc các tiến trình dựa trên tên của chúng.</li>
+      </ul>
+    `
+  },
+  {
+    id: '8',
+    slug: 'bash-scripting-co-ban',
+    title: 'Giới thiệu về Bash Scripting',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-23',
+    image: 'https://picsum.photos/1200/630?random=8',
+    image_alt: 'Bash script code on a screen',
+    excerpt: 'Tự động hóa các tác vụ lặp đi lặp lại và tạo các công cụ mạnh mẽ bằng cách viết các tập lệnh shell của riêng bạn bằng Bash.',
+    content: `
+      <p>Bash scripting cho phép bạn tự động hóa các chuỗi lệnh. Đó là một kỹ năng cơ bản cho bất kỳ quản trị viên hệ thống hoặc nhà phát triển nào làm việc với Linux.</p>
+      <h2>Cấu trúc Script cơ bản</h2>
+      <pre><code>#!/bin/bash
+# Đây là một bình luận
+ECHO "Hello, World!"
+MY_VARIABLE="Tôi là một biến"
+echo $MY_VARIABLE
+      </code></pre>
+      <p>Tập lệnh này bắt đầu bằng một 'shebang' (#!), cho hệ thống biết trình thông dịch nào sẽ sử dụng. Sau đó, nó in một thông báo, định nghĩa một biến và in giá trị của biến.</p>
+    `
+  },
+  {
+    id: '9',
+    slug: 'tim-hieu-quyen-tep-linux',
+    title: 'Tìm hiểu về quyền tệp trong Linux',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-24',
+    image: 'https://picsum.photos/1200/630?random=9',
+    image_alt: 'File permissions concept image',
+    excerpt: 'Bảo mật hệ thống của bạn bằng cách hiểu và quản lý quyền truy cập tệp cho người dùng, nhóm và những người khác.',
+    content: `
+      <p>Linux sử dụng một hệ thống quyền để kiểm soát ai có thể đọc, ghi và thực thi tệp. Hiểu điều này là rất quan trọng đối với bảo mật hệ thống.</p>
+      <h2>Ba loại quyền</h2>
+      <ul>
+        <li><strong>Đọc (r):</strong> Xem nội dung của một tệp hoặc liệt kê các tệp trong một thư mục.</li>
+        <li><strong>Ghi (w):</strong> Sửa đổi một tệp hoặc tạo/xóa các tệp trong một thư mục.</li>
+        <li><strong>Thực thi (x):</strong> Chạy một tệp (nếu đó là tập lệnh hoặc chương trình) hoặc vào một thư mục.</li>
+      </ul>
+      <p>Sử dụng lệnh <code>chmod</code> để thay đổi quyền và <code>chown</code> để thay đổi quyền sở hữu.</p>
+    `
+  },
+  {
+    id: '10',
+    slug: 'su-dung-grep-va-find',
+    title: 'Tìm kiếm tệp và văn bản bằng grep và find',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-25',
+    image: 'https://picsum.photos/1200/630?random=10',
+    image_alt: 'Magnifying glass over text',
+    excerpt: 'Làm chủ nghệ thuật tìm kiếm trong Linux. Tìm hiểu cách định vị tệp theo tên, loại, kích thước và tìm kiếm các mẫu văn bản cụ thể bên trong chúng.',
+    content: `
+      <p>Hai trong số các tiện ích mạnh mẽ nhất trong Linux là <code>find</code> và <code>grep</code>.</p>
+      <h2>Find</h2>
+      <p>Lệnh <code>find</code> tìm kiếm các tệp và thư mục dựa trên các tiêu chí như tên, kích thước, ngày sửa đổi, v.v.</p>
+      <pre><code># Tìm tất cả các tệp .log trong thư mục hiện tại
+find . -name "*.log"
+      </code></pre>
+      <h2>Grep</h2>
+      <p>Lệnh <code>grep</code> tìm kiếm các mẫu văn bản bên trong các tệp.</p>
+      <pre><code># Tìm kiếm "error" trong một tệp nhật ký
+grep "error" /var/log/syslog
+      </code></pre>
+    `
+  },
+  {
+    id: '11',
+    slug: 'ket-noi-mang-trong-linux',
+    title: 'Các lệnh kết nối mạng cơ bản trong Linux',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-26',
+    image: 'https://picsum.photos/1200/630?random=11',
+    image_alt: 'Network cables and server',
+    excerpt: 'Chẩn đoán các sự cố kết nối và xem thông tin mạng bằng các công cụ dòng lệnh Linux thiết yếu.',
+    content: `
+      <p>Linux cung cấp một bộ công cụ mạnh mẽ để quản lý và gỡ lỗi kết nối mạng.</p>
+      <h2>Các lệnh cần biết</h2>
+      <ul>
+        <li><code>ping &lt;máy_chủ&gt;</code>: Kiểm tra khả năng kết nối đến một máy chủ từ xa.</li>
+        <li><code>ifconfig</code> (cũ hơn) hoặc <code>ip addr</code> (mới hơn): Hiển thị và cấu hình các giao diện mạng.</li>
+        <li><code>netstat -tuln</code>: Liệt kê tất cả các cổng đang lắng nghe (TCP và UDP).</li>
+        <li><code>traceroute &lt;máy_chủ&gt;</code>: Hiển thị đường đi mà các gói tin đi đến một máy chủ.</li>
+      </ul>
+    `
+  },
+  {
+    id: '12',
+    slug: 'quan-ly-goi-voi-apt',
+    title: 'Quản lý gói trên các hệ thống dựa trên Debian bằng APT',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-27',
+    image: 'https://picsum.photos/1200/630?random=12',
+    image_alt: 'Software package boxes',
+    excerpt: 'Tìm hiểu cách cài đặt, cập nhật và xóa phần mềm trên Ubuntu, Debian và các bản phân phối liên quan bằng công cụ quản lý gói APT.',
+    content: `
+      <p>Advanced Package Tool (APT) là một công cụ mạnh mẽ để quản lý phần mềm trên các hệ thống dựa trên Debian. Nó đơn giản hóa quá trình cài đặt, nâng cấp và xóa các gói phần mềm.</p>
+      <h2>Các lệnh APT phổ biến</h2>
+      <ul>
+        <li><code>sudo apt update</code>: Đồng bộ hóa lại các tệp chỉ mục gói từ các nguồn của chúng.</li>
+        <li><code>sudo apt upgrade</code>: Cài đặt các phiên bản mới nhất của tất cả các gói hiện được cài đặt.</li>
+        <li><code>sudo apt install &lt;tên_gói&gt;</code>: Cài đặt một gói mới.</li>
+        <li><code>sudo apt remove &lt;tên_gói&gt;</code>: Xóa một gói.</li>
+      </ul>
+    `
+  },
+  {
+    id: '13',
+    slug: 'chuyen-huong-io-trong-linux',
+    title: 'Làm chủ chuyển hướng I/O và đường ống (Pipes) trong Linux',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-28',
+    image: 'https://picsum.photos/1200/630?random=13',
+    image_alt: 'Water pipes connecting things',
+    excerpt: 'Kiểm soát đầu vào và đầu ra của các lệnh của bạn. Tìm hiểu cách chuyển hướng đầu ra đến các tệp và chuỗi các lệnh lại với nhau bằng các đường ống.',
+    content: `
+      <p>Chuyển hướng và đường ống là các tính năng cốt lõi của shell Linux cho phép bạn tạo các quy trình làm việc phức tạp.</p>
+      <h2>Chuyển hướng</h2>
+      <ul>
+        <li><code>&gt;</code>: Chuyển hướng đầu ra tiêu chuẩn đến một tệp, ghi đè lên tệp nếu nó tồn tại.</li>
+        <li><code>&gt;&gt;</code>: Chuyển hướng đầu ra tiêu chuẩn đến một tệp, nối vào tệp nếu nó tồn tại.</li>
+        <li><code>&lt;</code>: Chuyển hướng đầu vào tiêu chuẩn từ một tệp.</li>
+        <li><code>2&gt;</code>: Chuyển hướng lỗi tiêu chuẩn.</li>
+      </ul>
+      <h2>Đường ống (Pipes)</h2>
+      <p>Đường ống (<code>|</code>) lấy đầu ra tiêu chuẩn của một lệnh và sử dụng nó làm đầu vào tiêu chuẩn của lệnh tiếp theo.</p>
+      <pre><code># Đếm số lượng tệp trong thư mục hiện tại
+ls -l | wc -l
+      </code></pre>
+    `
+  },
+  {
+    id: '14',
+    slug: 'su-dung-ssh-de-ket-noi-tu-xa',
+    title: 'Bảo mật kết nối từ xa bằng SSH',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-29',
+    image: 'https://picsum.photos/1200/630?random=14',
+    image_alt: 'Secure lock on a digital tunnel',
+    excerpt: 'Tìm hiểu cách truy cập và quản lý các máy chủ Linux từ xa một cách an toàn bằng giao thức Secure Shell (SSH).',
+    content: `
+      <p>SSH (Secure Shell) là một giao thức mạng mật mã để vận hành các dịch vụ mạng một cách an toàn qua một mạng không an toàn. Các ứng dụng chính của nó là đăng nhập dòng lệnh từ xa và thực thi lệnh từ xa.</p>
+      <h2>Kết nối với SSH</h2>
+      <p>Để kết nối đến một máy chủ từ xa, hãy sử dụng lệnh sau:</p>
+      <pre><code>ssh &lt;tên_người_dùng&gt;@&lt;địa_chỉ_ip_máy_chủ&gt;
+      </code></pre>
+      <h2>Xác thực dựa trên khóa</h2>
+      <p>Để tăng cường bảo mật, bạn nên sử dụng xác thực khóa SSH thay vì mật khẩu. Điều này liên quan đến việc tạo một cặp khóa công khai-riêng tư và đặt khóa công khai trên máy chủ.</p>
+    `
+  },
+  {
+    id: '15',
+    slug: 'cau-hinh-tuong-lua-voi-ufw',
+    title: 'Thiết lập tường lửa cơ bản với UFW',
+    category: 'systems',
+    author: 'KhanhNN',
+    published_date: '2024-07-30',
+    image: 'https://picsum.photos/1200/630?random=15',
+    image_alt: 'Digital firewall brick wall',
+    excerpt: 'Bảo vệ máy chủ Linux của bạn bằng cách định cấu hình tường lửa. Tìm hiểu giao diện Uncomplicated Firewall (UFW) dễ sử dụng.',
+    content: `
+      <p>UFW, hay Uncomplicated Firewall, là một giao diện người dùng thân thiện để quản lý các quy tắc tường lửa iptables. Nó cung cấp một cách đơn giản để bảo mật mạng của bạn.</p>
+      <h2>Các lệnh UFW cơ bản</h2>
+      <ul>
+        <li><code>sudo ufw enable</code>: Bật tường lửa.</li>
+        <li><code>sudo ufw status</code>: Kiểm tra trạng thái của tường lửa.</li>
+        <li><code>sudo ufw default deny incoming</code>: Từ chối tất cả các kết nối đến theo mặc định.</li>
+        <li><code>sudo ufw allow ssh</code>: Cho phép tất cả các kết nối đến trên cổng SSH.</li>
+        <li><code>sudo ufw allow 80/tcp</code>: Cho phép các kết nối đến trên cổng 80 (HTTP).</li>
+      </ul>
+    `
+  }
 ];
+
