@@ -9,7 +9,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogIn, LogOut, PlusCircle, UserCog } from 'lucide-react';
+import { Bot, LogIn, LogOut, PlusCircle, UserCog } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 function UserNav() {
@@ -50,10 +50,16 @@ function UserNav() {
                 <DropdownMenuLabel>Quản trị</DropdownMenuLabel>
                  <Link href="/admin/create-post">
                     <DropdownMenuItem>
-                            <PlusCircle className="mr-2 h-4 w-4" />
-                            <span>Bài viết mới</span>
+                      <PlusCircle className="mr-2 h-4 w-4" />
+                      <span>Bài viết mới</span>
                     </DropdownMenuItem>
                  </Link>
+                 <Link href="/admin/generate-posts">
+                    <DropdownMenuItem>
+                      <Bot className="mr-2 h-4 w-4" />
+                      <span>Soạn bài với AI</span>
+                    </DropdownMenuItem>
+                  </Link>
             </DropdownMenuGroup>
         )}
         <DropdownMenuSeparator />
