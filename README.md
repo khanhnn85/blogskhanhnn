@@ -34,10 +34,18 @@
 - [Node.js](https://nodejs.org/) (phiên bản 18.x trở lên)
 - Một tài khoản [Firebase](https://firebase.google.com/)
 
-### 1. Cài đặt các gói phụ thuộc
+### 1. Chạy Script cài đặt tự động
+Cách nhanh nhất để bắt đầu là sử dụng script cài đặt. Script này sẽ cài đặt các gói phụ thuộc và tạo tệp `.env` cho bạn.
+
+Đầu tiên, cấp quyền thực thi cho script:
 ```bash
-npm install
+chmod +x install.sh
 ```
+Sau đó, chạy script:
+```bash
+./install.sh
+```
+Script sẽ hướng dẫn bạn qua các bước tiếp theo.
 
 ### 2. Thiết lập Firebase
 
@@ -47,10 +55,10 @@ npm install
 4.  **Bật Firestore:** Vào mục **Build > Firestore Database** và tạo một cơ sở dữ liệu mới. Bắt đầu ở chế độ sản xuất (production mode).
 
 ### 3. Thiết lập biến môi trường
-
-Tạo một tệp có tên `.env` ở thư mục gốc của dự án và dán thông tin cấu hình Firebase của bạn vào đó:
+Sau khi chạy script `install.sh`, một tệp `.env` sẽ được tạo. Mở tệp này và dán thông tin cấu hình Firebase bạn đã sao chép ở bước trên vào:
 
 ```env
+# Firebase App Configuration
 NEXT_PUBLIC_FIREBASE_PROJECT_ID="your-project-id"
 NEXT_PUBLIC_FIREBASE_APP_ID="your-app-id"
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-storage-bucket"
@@ -58,7 +66,7 @@ NEXT_PUBLIC_FIREBASE_API_KEY="your-api-key"
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-auth-domain"
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="your-messaging-sender-id"
 
-# (Optional) For Genkit AI features
+# (Optional) For Genkit AI features - Get from Google AI Studio
 # GEMINI_API_KEY="your-google-ai-studio-api-key"
 ```
 
@@ -79,9 +87,7 @@ service cloud.firestore {
       allow write: if request.auth != null && request.auth.token.email == 'khanhnnvn@gmail.com';
     }
     match /users/{userId} {
-      allow read: if true;
-      // Chỉ người dùng đã xác thực mới được tạo/cập nhật thông tin của chính họ
-      allow write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if request.auth != null && request.auth.uid == userId;
     }
   }
 }
@@ -141,5 +147,5 @@ Mở [http://localhost:3001](http://localhost:3001) trên trình duyệt của b
 - `npm run dev`: Chạy ứng dụng ở chế độ phát triển trên cổng 3001.
 - `npm run build`: Build ứng dụng để triển khai production.
 - `npm run start`: Chạy phiên bản đã build (không qua pm2).
-- `npm run lint`: Chạy ESLint để kiểm tra lỗi mã nguồn.
 - `npm run prod:start`: Chạy phiên bản đã build trên cổng 3001.
+- `npm run lint`: Chạy ESLint để kiểm tra lỗi mã nguồn.
