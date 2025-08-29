@@ -9,12 +9,13 @@ export async function generateStaticParams() {
 }
 
 export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  const category = CATEGORIES.find((c) => c.slug === params.slug);
+  const slug = params.slug;
+  const category = CATEGORIES.find((c) => c.slug === slug);
   if (!category) {
     notFound();
   }
 
-  const articles = await getArticles(params.slug);
+  const articles = await getArticles(slug);
 
   return (
     <div className="space-y-8">
