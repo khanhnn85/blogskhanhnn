@@ -13,45 +13,36 @@ export default function Home() {
 
   return (
     <div className="space-y-12">
-      <section>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="relative h-64 md:h-96 w-full rounded-lg overflow-hidden group shadow-lg">
-              <Link href={`/article/${featuredArticle.slug}`}>
-                  <Image
-                    src={featuredArticle.image}
-                    alt={featuredArticle.image_alt}
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority
-                    data-ai-hint="technology abstract"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              </Link>
+      <section className="relative w-full rounded-lg overflow-hidden group shadow-lg">
+          <Link href={`/article/${featuredArticle.slug}`}>
+            <div className="relative h-80 w-full">
+              <Image
+                src={featuredArticle.image}
+                alt={featuredArticle.image_alt}
+                fill
+                className="object-cover transition-transform group-hover:scale-105"
+                sizes="100vw"
+                priority
+                data-ai-hint="technology abstract"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
             </div>
-            <div className="space-y-4">
-                {featuredCategory && (
-                    <Link href={`/category/${featuredCategory.slug}`}>
-                        <Badge className="font-semibold text-sm py-1 px-3 bg-primary/10 text-primary hover:bg-primary/20">
-                            {featuredCategory.name}
-                        </Badge>
-                    </Link>
-                )}
-                <h1 className="text-3xl lg:text-4xl font-headline font-bold text-foreground leading-tight tracking-tighter">
-                    <Link href={`/article/${featuredArticle.slug}`} className="hover:text-primary transition-colors">
-                      {featuredArticle.title}
-                    </Link>
-                </h1>
-                <p className="text-muted-foreground lg:text-lg">{featuredArticle.excerpt}</p>
-                <div className="text-sm text-muted-foreground">
-                    <span>By {featuredArticle.author}</span> &middot;{' '}
-                    <span>{new Date(featuredArticle.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                </div>
-                 <Link href={`/article/${featuredArticle.slug}`} className="inline-flex items-center font-semibold text-primary group">
-                    Đọc thêm <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-            </div>
-        </div>
+          </Link>
+          <div className="absolute bottom-0 left-0 p-6 md:p-8 space-y-3 w-full md:w-3/4 lg:w-1/2">
+              {featuredCategory && (
+                  <Link href={`/category/${featuredCategory.slug}`}>
+                      <Badge className="font-semibold text-sm py-1 px-3 border-transparent bg-primary/20 text-white hover:bg-primary/30">
+                          {featuredCategory.name}
+                      </Badge>
+                  </Link>
+              )}
+              <h1 className="text-2xl lg:text-3xl font-headline font-bold text-white leading-tight tracking-tight">
+                  <Link href={`/article/${featuredArticle.slug}`} className="hover:text-primary/90 transition-colors">
+                    {featuredArticle.title}
+                  </Link>
+              </h1>
+              <p className="text-white/80 hidden md:line-clamp-2">{featuredArticle.excerpt}</p>
+          </div>
       </section>
 
       <section className="space-y-8">
