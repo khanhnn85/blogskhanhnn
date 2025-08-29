@@ -1,10 +1,11 @@
 
+
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
-import { CATEGORIES } from '@/lib/data';
+import { CATEGORIES, createArticle } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,7 +14,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import type { Article } from '@/types';
-
 
 function slugify(text: string) {
   return text
@@ -77,14 +77,11 @@ export default function CreatePostPage() {
         return;
     }
     
-    // NOTE: The following code is for demonstration and does not persist data.
-    // In a real application, you would add the new article to your data source.
-
     const imageUrl = extractFirstImage(content);
     const imageAlt = extractImageAlt(content);
     const excerpt = createExcerpt(content);
 
-    const newArticle: Partial<Article> = {
+    const newArticle: Omit<Article, 'id'> = {
       title,
       slug: slugify(title),
       category,
@@ -96,21 +93,19 @@ export default function CreatePostPage() {
       image_alt: imageAlt,
     };
     
-    console.log("Simulating article creation:", newArticle);
-
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await createArticle(newArticle);
       
       toast({
-        title: "Đăng bài thành công! (Mô phỏng)",
-        description: `Bài viết "${title}" đã được tạo (dữ liệu không được lưu).`,
+        title: "Đăng bài thành công!",
+        description: `Bài viết "${title}" đã được lưu vào Firestore.`,
       });
   
       // Reset form
       setTitle('');
       setCategory('');
       setContent('');
+      router.push(`/article/${newArticle.slug}`);
   
     } catch (e) {
       console.error("Error adding document: ", e);

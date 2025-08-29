@@ -1,4 +1,5 @@
 
+
 import { getArticles } from '@/lib/data';
 import ArticleList from '@/components/article-list';
 import Link from 'next/link';
@@ -14,7 +15,7 @@ export default async function Home() {
       <div className="text-center py-16">
         <h2 className="text-2xl font-headline font-bold">Chào mừng tới KhanhNN Insights</h2>
         <p className="text-muted-foreground mt-4">
-          Hiện tại chưa có bài viết nào. Hãy quay lại sau nhé!
+          Hiện tại chưa có bài viết nào. Hãy quay lại sau hoặc thử nhập dữ liệu vào Firestore.
         </p>
       </div>
     );
@@ -68,3 +69,4 @@ export default async function Home() {
     </div>
   );
 }
+
