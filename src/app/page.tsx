@@ -28,7 +28,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
             </div>
           </Link>
-          <div className="absolute bottom-0 left-0 p-6 md:p-8 space-y-3 w-full md:w-3/4 lg:w-1/2">
+          <div className="absolute bottom-0 left-0 p-6 md:p-8 space-y-3 w-full md:w-2/3">
               {featuredCategory && (
                   <Link href={`/category/${featuredCategory.slug}`}>
                       <Badge className="font-semibold text-sm py-1 px-3 border-transparent bg-primary/20 text-white hover:bg-primary/30">
