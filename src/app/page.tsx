@@ -1,24 +1,36 @@
+
 import { getArticles } from '@/lib/data';
 import ArticleList from '@/components/article-list';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { CATEGORIES } from '@/lib/data';
-import { ArrowRight } from 'lucide-react';
 
 export default async function Home() {
   const allArticles = await getArticles();
+
+  if (allArticles.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <h2 className="text-2xl font-headline font-bold">Chào mừng tới KhanhNN Insights</h2>
+        <p className="text-muted-foreground mt-4">
+          Hiện tại chưa có bài viết nào. Hãy quay lại sau nhé!
+        </p>
+      </div>
+    );
+  }
+  
   const featuredArticle = allArticles[0];
-  const otherArticles = allArticles.slice(1, 4);
+  const otherArticles = allArticles.slice(1, 5);
   const featuredCategory = CATEGORIES.find(c => c.slug === featuredArticle.category);
 
   return (
     <div className="space-y-12">
       <section className="relative w-full rounded-lg overflow-hidden group shadow-lg">
           <Link href={`/article/${featuredArticle.slug}`}>
-            <div className="relative h-64 w-full">
+            <div className="relative h-64 md:h-96 w-full">
               <Image
-                src="https://picsum.photos/1200/800?random=7"
+                src={featuredArticle.image}
                 alt={featuredArticle.image_alt}
                 fill
                 className="object-cover transition-transform group-hover:scale-105"
