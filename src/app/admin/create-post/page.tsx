@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
-import { CATEGORIES, ARTICLES } from '@/lib/data';
+import { CATEGORIES } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -15,16 +15,13 @@ import { Label } from '@/components/ui/label';
 import type { Article } from '@/types';
 
 export default function CreatePostPage() {
-  const { isAdmin, loading, user } = useAuth();
+  const { isAdmin, loading } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
-  const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
-  const [image, setImage] = useState('');
-  const [imageAlt, setImageAlt] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (loading) {
@@ -36,11 +33,28 @@ export default function CreatePostPage() {
     return null;
   }
 
+  const extractFirstImage = (htmlContent: string) => {
+    const imgRegex = /<img[^>]+src="([^">]+)"[^>]*>/;
+    const match = htmlContent.match(imgRegex);
+    return match ? match[1] : `https://picsum.photos/1200/630?random=${Math.floor(Math.random() * 100)}`;
+  };
+  
+  const extractImageAlt = (htmlContent: string) => {
+    const altRegex = /<img[^>]+alt="([^">]+)"[^>]*>/;
+    const match = htmlContent.match(altRegex);
+    return match ? match[1] : 'Technology Abstract';
+  }
+
+  const createExcerpt = (htmlContent: string) => {
+    const textContent = htmlContent.replace(/<[^>]*>?/gm, '');
+    return textContent.length > 160 ? textContent.substring(0, 160) + '...' : textContent;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    if (!title || !category || !content || !excerpt || !image || !imageAlt) {
+    if (!title || !category || !content) {
         toast({
             variant: "destructive",
             title: "Lỗi",
@@ -50,14 +64,16 @@ export default function CreatePostPage() {
         return;
     }
     
-    // In a real app, you would send this to a server endpoint to save to a database.
-    // For this prototype, we'll just log it and show a success message.
+    const imageUrl = extractFirstImage(content);
+    const imageAlt = extractImageAlt(content);
+    const excerpt = createExcerpt(content);
+
     const newArticle: Omit<Article, 'id' | 'published_date' | 'author' | 'slug'> = {
       title,
       category,
       excerpt,
       content,
-      image,
+      image: imageUrl,
       image_alt: imageAlt,
     };
 
@@ -74,15 +90,9 @@ export default function CreatePostPage() {
     // Reset form
     setTitle('');
     setCategory('');
-    setExcerpt('');
     setContent('');
-    setImage('');
-    setImageAlt('');
 
     setIsSubmitting(false);
-    
-    // In a real app, you might redirect to the new article page
-    // router.push(`/article/${new-slug}`);
   };
 
 
@@ -122,45 +132,12 @@ export default function CreatePostPage() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="excerpt">Đoạn trích (Excerpt)</Label>
-              <Textarea
-                id="excerpt"
-                value={excerpt}
-                onChange={(e) => setExcerpt(e.target.value)}
-                placeholder="Viết một đoạn trích ngắn gọn cho bài viết"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-                <Label htmlFor="image">URL Hình ảnh</Label>
-                <Input 
-                    id="image"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    placeholder="https://example.com/image.jpg"
-                    required
-                />
-            </div>
-
-            <div className="space-y-2">
-                <Label htmlFor="imageAlt">Mô tả hình ảnh (Alt Text)</Label>
-                <Input 
-                    id="imageAlt"
-                    value={imageAlt}
-                    onChange={(e) => setImageAlt(e.target.value)}
-                    placeholder="Mô tả nội dung hình ảnh"
-                    required
-                />
-            </div>
-
-            <div className="space-y-2">
               <Label htmlFor="content">Nội dung</Label>
               <Textarea
                 id="content"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="Viết nội dung bài viết của bạn tại đây (hỗ trợ HTML)"
+                placeholder="Viết nội dung bài viết của bạn tại đây. Chèn ảnh bằng thẻ <img>. Ảnh đầu tiên sẽ là ảnh đại diện."
                 rows={15}
                 required
               />
