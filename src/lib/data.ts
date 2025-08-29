@@ -3,7 +3,7 @@ import type { Category } from '@/types';
 import { Cog, Shield, Network, Cloud } from 'lucide-react';
 import type { Article } from '@/types';
 import { db } from './firebase';
-import { collection, getDocs, query, where, orderBy, limit, doc, getDoc, addDoc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, limit, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 
 export const CATEGORIES: Category[] = [
@@ -120,6 +120,26 @@ export async function createArticle(article: Omit<Article, 'id'>): Promise<strin
     return docRef.id;
   } catch (error) {
     console.error("Error creating article: ", error);
+    throw error;
+  }
+}
+
+export async function updateArticle(articleId: string, articleData: Partial<Article>): Promise<void> {
+  try {
+    const articleRef = doc(db, 'articles', articleId);
+    await updateDoc(articleRef, articleData);
+  } catch (error) {
+    console.error("Error updating article: ", error);
+    throw error;
+  }
+}
+
+export async function deleteArticle(articleId: string): Promise<void> {
+  try {
+    const articleRef = doc(db, 'articles', articleId);
+    await deleteDoc(articleRef);
+  } catch (error) {
+    console.error("Error deleting article: ", error);
     throw error;
   }
 }

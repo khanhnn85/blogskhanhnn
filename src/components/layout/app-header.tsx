@@ -9,7 +9,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Bot, LogIn, LogOut, PlusCircle, UserCog } from 'lucide-react';
+import { Bot, LogIn, LogOut, PlusCircle, UserCog, ListOrdered } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 function UserNav() {
@@ -60,6 +60,12 @@ function UserNav() {
                       <span>Soạn bài với AI</span>
                     </DropdownMenuItem>
                   </Link>
+                   <Link href="/admin/manage-posts">
+                    <DropdownMenuItem>
+                      <ListOrdered className="mr-2 h-4 w-4" />
+                      <span>Quản lý bài viết</span>
+                    </DropdownMenuItem>
+                  </Link>
             </DropdownMenuGroup>
         )}
         <DropdownMenuSeparator />
@@ -81,7 +87,7 @@ function AdminNav() {
     }
 
     return (
-        <Button variant="outline" size="sm" onClick={() => router.push('/admin/create-post')}>
+        <Button variant="outline" size="sm" onClick={() => router.push('/admin/manage-posts')}>
             <UserCog className="mr-2 h-4 w-4" />
             Quản trị
         </Button>
