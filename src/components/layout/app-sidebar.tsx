@@ -2,8 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { CATEGORIES } from '@/lib/data';
 import {
   SidebarHeader,
   SidebarContent,
@@ -39,20 +37,6 @@ export default function AppSidebar() {
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
-          {CATEGORIES.map((category) => (
-            <SidebarMenuItem key={category.slug}>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === `/category/${category.slug}`}
-                tooltip={category.name}
-              >
-                <Link href={`/category/${category.slug}`}>
-                  <category.icon />
-                  <span>{category.name}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
         </SidebarMenu>
       </SidebarContent>
     </>

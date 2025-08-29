@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar';
 import AppSidebar from '@/components/layout/app-sidebar';
 import AppHeader from '@/components/layout/app-header';
+import CategoryNav from '@/components/layout/category-nav';
 
 export const metadata: Metadata = {
   title: 'KhanhNN Insights',
@@ -31,6 +32,7 @@ export default function RootLayout({
           </Sidebar>
           <SidebarInset>
             <AppHeader />
+            <CategoryNav />
             <main className="p-4 sm:p-6 lg:p-8">
               {children}
             </main>
