@@ -223,7 +223,7 @@ export default function GeneratePostsPage() {
                     ) : (
                          <>
                             <ListPlus className="mr-2 h-4 w-4" />
-                            Đăng {numC} bài đã chọn
+                            Đăng {numSelected} bài đã chọn
                         </>
                     )}
                 </Button>
