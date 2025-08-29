@@ -13,8 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import type { Article } from '@/types';
-import { collection, addDoc } from "firebase/firestore"; 
-import { db } from '@/lib/firebase';
+
 
 function slugify(text: string) {
   return text
@@ -78,11 +77,14 @@ export default function CreatePostPage() {
         return;
     }
     
+    // NOTE: The following code is for demonstration and does not persist data.
+    // In a real application, you would add the new article to your data source.
+
     const imageUrl = extractFirstImage(content);
     const imageAlt = extractImageAlt(content);
     const excerpt = createExcerpt(content);
 
-    const newArticle: Omit<Article, 'id'> = {
+    const newArticle: Partial<Article> = {
       title,
       slug: slugify(title),
       category,
@@ -93,14 +95,16 @@ export default function CreatePostPage() {
       image: imageUrl,
       image_alt: imageAlt,
     };
+    
+    console.log("Simulating article creation:", newArticle);
 
     try {
-      const docRef = await addDoc(collection(db, "articles"), newArticle);
-      console.log("Document written with ID: ", docRef.id);
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast({
-        title: "Đăng bài thành công!",
-        description: `Bài viết "${title}" đã được tạo.`,
+        title: "Đăng bài thành công! (Mô phỏng)",
+        description: `Bài viết "${title}" đã được tạo (dữ liệu không được lưu).`,
       });
   
       // Reset form
@@ -177,3 +181,5 @@ export default function CreatePostPage() {
     </div>
   );
 }
+
+    
