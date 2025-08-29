@@ -17,4 +17,5 @@ export type Article = {
   image_alt: string;
   excerpt: string;
   content: string;
+  keywords?: string[];
 };

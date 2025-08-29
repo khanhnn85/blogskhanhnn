@@ -6,6 +6,53 @@ import ArticleActions from './article-actions';
 import Link from 'next/link';
 import { CATEGORIES } from '@/lib/data';
 import ArticleList from '@/components/article-list';
+import type { Metadata } from 'next';
+
+type Props = {
+  params: { slug: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const article = await getArticleBySlug(params.slug);
+
+  if (!article) {
+    return {
+      title: "Không tìm thấy bài viết",
+    };
+  }
+
+  const categoryName = CATEGORIES.find(c => c.slug === article.category)?.name || 'Bài viết';
+  const defaultKeywords = ['Blog công nghệ', 'hệ điều hành Linux', 'Bảo mật ứng dụng', 'Blog chia sẻ của Nguyễn Ngọc Khánh', 'Chia sẻ để thành công'];
+  const articleKeywords = article.keywords || [];
+
+  return {
+    title: article.title,
+    description: article.excerpt,
+    keywords: [...new Set([categoryName, article.title, ...articleKeywords, ...defaultKeywords])],
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      type: 'article',
+      publishedTime: article.published_date,
+      url: `/article/${article.slug}`,
+      images: [
+        {
+          url: article.image,
+          width: 1200,
+          height: 630,
+          alt: article.image_alt,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.excerpt,
+      images: [article.image],
+    },
+  };
+}
+
 
 export async function generateStaticParams() {
   const slugs = await getAllArticleSlugs();
@@ -14,7 +61,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
+export default async function ArticlePage({ params }: Props) {
   const article = await getArticleBySlug(params.slug);
 
   if (!article) {
@@ -41,7 +88,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           </h1>
           <div className="text-sm text-muted-foreground">
             <span>By {article.author}</span> &middot;{' '}
-            <span>{new Date(article.published_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            <span>{new Date(article.published_date).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
           </div>
         </header>
 
