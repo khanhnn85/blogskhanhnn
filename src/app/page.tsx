@@ -15,15 +15,15 @@ export default function Home() {
     <div className="space-y-12">
       <section className="relative w-full rounded-lg overflow-hidden group shadow-lg">
           <Link href={`/article/${featuredArticle.slug}`}>
-            <div className="relative h-80 w-full">
+            <div className="relative h-72 w-full">
               <Image
-                src={featuredArticle.image}
+                src="https://picsum.photos/1200/800?random=6"
                 alt={featuredArticle.image_alt}
                 fill
                 className="object-cover transition-transform group-hover:scale-105"
                 sizes="100vw"
                 priority
-                data-ai-hint="technology abstract"
+                data-ai-hint="technology AI"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
             </div>
