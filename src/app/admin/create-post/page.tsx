@@ -1,10 +1,11 @@
 
+
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
-import { CATEGORIES } from '@/lib/data';
+import { CATEGORIES, createArticle } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,8 +15,20 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import type { Article } from '@/types';
 
+function slugify(text: string) {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
+
+
 export default function CreatePostPage() {
-  const { isAdmin, loading } = useAuth();
+  const { isAdmin, loading, user } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -24,13 +37,14 @@ export default function CreatePostPage() {
   const [content, setContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    if (!loading && !isAdmin) {
+      router.push('/');
+    }
+  }, [loading, isAdmin, router]);
 
-  if (!isAdmin) {
-    router.push('/');
-    return null;
+  if (loading || !isAdmin) {
+    return <div>Loading...</div>;
   }
 
   const extractFirstImage = (htmlContent: string) => {
@@ -68,31 +82,42 @@ export default function CreatePostPage() {
     const imageAlt = extractImageAlt(content);
     const excerpt = createExcerpt(content);
 
-    const newArticle: Omit<Article, 'id' | 'published_date' | 'author' | 'slug'> = {
+    const newArticle: Omit<Article, 'id'> = {
       title,
+      slug: slugify(title),
       category,
+      author: user?.displayName || 'Admin',
+      published_date: new Date().toISOString(),
       excerpt,
       content,
       image: imageUrl,
       image_alt: imageAlt,
     };
-
-    console.log('New Article Submitted:', newArticle);
     
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    toast({
-      title: "Đăng bài thành công!",
-      description: `Bài viết "${title}" đã được tạo.`,
-    });
-
-    // Reset form
-    setTitle('');
-    setCategory('');
-    setContent('');
-
-    setIsSubmitting(false);
+    try {
+      await createArticle(newArticle);
+      
+      toast({
+        title: "Đăng bài thành công!",
+        description: `Bài viết "${title}" đã được lưu vào Firestore.`,
+      });
+  
+      // Reset form
+      setTitle('');
+      setCategory('');
+      setContent('');
+      router.push(`/article/${newArticle.slug}`);
+  
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      toast({
+        variant: "destructive",
+        title: "Lỗi",
+        description: "Đã có lỗi xảy ra khi đăng bài. Vui lòng thử lại.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
 
@@ -152,3 +177,5 @@ export default function CreatePostPage() {
     </div>
   );
 }
+
+    
